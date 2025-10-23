@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Khandelwal - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header">
+        <nav class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg class="icon-brain" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+                    </svg>
+                    <span>AK</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#research" class="nav-link">Research</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div class="hero-background"></div>
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <div class="profile-image-wrapper">
+                        <div class="profile-glow"></div>
+                        <img src="https://images.unsplash.com/photo-1645839078449-124db8a049fd?w=400" alt="Profile" class="profile-image">
+                    </div>
+                    
+                    <h1>
+                        <span class="name">Aditya Khandelwal</span>
+                        <span class="title">Neuromorphic Computing Researcher</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Exploring the intersection of neuroscience and computing to build brain-inspired 
+                        systems that push the boundaries of artificial intelligence.
+                    </p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com" target="_blank" class="social-btn">GitHub</a>
+                        <a href="https://linkedin.com" target="_blank" class="social-btn">LinkedIn</a>
+                        <a href="mailto:aditya@example.com" class="social-btn">Email</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-description">
+                    <p>I am a computer scientist specializing in neuromorphic computing and brain-inspired AI. My research focuses on developing novel computational paradigms that mimic biological neural systems.</p>
+                    <p>With expertise spanning spiking neural networks, event-driven processing, and energy-efficient hardware architectures, I work at the cutting edge of computational neuroscience and machine learning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="research-section">
+            <div class="container">
+                <h2>Research Areas</h2>
+                <p class="section-description">
+                    My research bridges neuroscience, computer science, and engineering.
+                </p>
+                
+                <div class="research-grid">
+                    <div class="research-card">
+                        <h3>Spiking Neural Networks</h3>
+                        <p>Developing biologically plausible learning algorithms for spiking neural networks.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h3>Neuromorphic Hardware</h3>
+                        <p>Designing custom neuromorphic chips for ultra-low-power AI applications.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h3>Energy-Efficient AI</h3>
+                        <p>Creating novel architectures that reduce the energy footprint of AI systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <h2>Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <h3>NeuroSim: Neuromorphic Simulator</h3>
+                            <p>An open-source Python framework for simulating large-scale spiking neural networks.</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">CUDA</span>
+                                <span class="tag">Neural Networks</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-content">
+                            <h3>SpikeFlow: Event-Driven Vision</h3>
+                            <p>Real-time object detection using event cameras and spiking neural networks.</p>
+                            <div class="project-tags">
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">SNNs</span>
+                                <span class="tag">Edge AI</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-content">
+                            <h3>BrainChip: Neuromorphic ASIC</h3>
+                            <p>Custom neuromorphic processor featuring 1M spiking neurons.</p>
+                            <div class="project-tags">
+                                <span class="tag">Hardware</span>
+                                <span class="tag">Verilog</span>
+                                <span class="tag">ASIC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <p class="section-description">
+                    Interested in collaboration or have questions about my research?
+                </p>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <div>
+                                <h3>Email</h3>
+                                <a href="mailto:aditya.khandelwal@university.edu">aditya.khandelwal@university.edu</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div>
+                                <h3>Location</h3>
+                                <p>Neuromorphic Systems Lab<br>Department of Computer Science<br>Research University</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Your message..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary-large">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>�� 2025 Aditya Khandelwal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
