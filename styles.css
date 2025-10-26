@@ -743,19 +743,19 @@ section {
     margin: 0;
 }
 
-.research-interests-card {
+.research-interests-card, .activities-interests-card {
     background: linear-gradient(to bottom right, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
     border: 1px solid rgba(6, 182, 212, 0.2);
     border-radius: 0.75rem;
     padding: 1.5rem;
 }
 
-.research-interests-card h3 {
+.research-interests-card, .activities-interests-card h3 {
     color: #f1f5f9;
     margin-bottom: 0.5rem;
 }
 
-.research-interests-card p {
+.research-interests-card, .activities-interests-card p {
     color: #cbd5e1;
     margin: 0;
 }
@@ -940,6 +940,7 @@ section {
     .about-grid,
     .research-grid,
     .projects-grid,
+    .activities-grid,
     .contact-grid {
         grid-template-columns: 1fr;
     }
