@@ -32,9 +32,7 @@
     </header>
   
 <body>
-  <main class="container" aria-label="Photography grid">
-    <h1>Photography</h1>
-        <!-- ========== Photo Grid + Lightbox (Drop-in) ========== -->
+    <!-- ========== Photo Grid + Lightbox with Captions ========== -->
 <style>
   /* Grid */
   .photo-grid {
@@ -43,30 +41,37 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--gap);
   }
-  @media (max-width: 900px) {
-    .photo-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .photo-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 900px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .photo-grid { grid-template-columns: 1fr; } }
 
-  .photo-card {
+  figure.photo-card {
     position: relative;
     cursor: zoom-in;
     border-radius: 12px;
     overflow: hidden;
-    background: #111827; /* fallback bg while loading */
+    background: #111827;
     box-shadow: 0 6px 16px rgba(0,0,0,.25);
     transition: transform .15s ease, box-shadow .15s ease;
   }
-  .photo-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.3); }
+  figure.photo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,.3);
+  }
 
   .photo-card img {
     width: 100%;
     height: 100%;
-    display: block;
-    aspect-ratio: 4/3;         /* keep tidy cards */
+    aspect-ratio: 4/3;
     object-fit: cover;
+    display: block;
+  }
+
+  .photo-card figcaption {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    background: rgba(15,23,42,0.8);
+    text-align: center;
   }
 
   /* Lightbox */
@@ -89,11 +94,15 @@
   .lightbox__img {
     max-width: 100%;
     max-height: 90vh;
-    width: auto;
-    height: auto;
-    display: block;
     border-radius: 10px;
     box-shadow: 0 12px 36px rgba(0,0,0,.5);
+  }
+
+  .lightbox__caption {
+    margin-top: .6rem;
+    text-align: center;
+    color: #e5e7eb;
+    font-size: .95rem;
   }
 
   .lightbox__close,
@@ -126,52 +135,41 @@
     .lightbox__close { top: 8px; right: 8px; }
   }
 
-  /* Optional caption */
-  .lightbox__caption {
-    margin-top: .6rem;
-    text-align: center;
-    color: #e5e7eb;
-    font-size: .95rem;
-  }
-
-  /* Hide buttons if only one image */
   .lightbox[data-has-multiple="false"] .lightbox__prev,
   .lightbox[data-has-multiple="false"] .lightbox__next { display: none; }
 </style>
 
 <div class="photo-grid" id="photoGrid">
-  <!-- Card 1 -->
-  <button class="photo-card" data-index="0" aria-label="Open image 1">
+  <figure class="photo-card" data-index="0">
     <img
-      src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=60"
-      data-full="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&auto=format&fit=crop&q=80"
+      src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800"
+      data-full="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000"
       alt="Mountain range at golden hour"
       loading="lazy">
-  </button>
+    <figcaption>Mountain range at golden hour</figcaption>
+  </figure>
 
-  <!-- Card 2 -->
-  <button class="photo-card" data-index="1" aria-label="Open image 2">
+  <figure class="photo-card" data-index="1">
     <img
-      src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&auto=format&fit=crop&q=60"
-      data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2000&auto=format&fit=crop&q=80"
+      src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800"
+      data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2000"
       alt="Forest with sunbeams"
       loading="lazy">
-  </button>
+    <figcaption>Forest with sunbeams</figcaption>
+  </figure>
 
-  <!-- Card 3 -->
-  <button class="photo-card" data-index="2" aria-label="Open image 3">
+  <figure class="photo-card" data-index="2">
     <img
-      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=60"
-      data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&auto=format&fit=crop&q=80"
+      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800"
+      data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000"
       alt="Ocean waves at sunset"
       loading="lazy">
-  </button>
-
-  <!-- Add more cards as needed... -->
+    <figcaption>Ocean waves at sunset</figcaption>
+  </figure>
 </div>
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+<div class="lightbox" id="lightbox" aria-hidden="true">
   <div class="lightbox__dialog">
     <img class="lightbox__img" id="lightboxImg" alt="">
     <div class="lightbox__caption" id="lightboxCaption"></div>
@@ -183,223 +181,54 @@
 </div>
 
 <script>
-  (function () {
-    const grid = document.getElementById('photoGrid');
-    const cards = Array.from(grid.querySelectorAll('.photo-card img'));
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightboxImg');
-    const lbCaption = document.getElementById('lightboxCaption');
-    const btnClose = document.getElementById('lightboxClose');
-    const btnPrev = document.getElementById('lightboxPrev');
-    const btnNext = document.getElementById('lightboxNext');
+(function(){
+  const grid = document.getElementById('photoGrid');
+  const figures = Array.from(grid.querySelectorAll('.photo-card'));
+  const imgs = figures.map(f => f.querySelector('img'));
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCaption = document.getElementById('lightboxCaption');
+  const btnClose = document.getElementById('lightboxClose');
+  const btnPrev = document.getElementById('lightboxPrev');
+  const btnNext = document.getElementById('lightboxNext');
+  let current = 0;
 
-    let current = 0;
+  function openAt(index){
+    if(index<0 || index>=imgs.length) return;
+    current = index;
+    const img = imgs[index];
+    lbImg.src = img.dataset.full || img.src;
+    lbImg.alt = img.alt || '';
+    lbCaption.textContent = img.alt || '';
+    lb.setAttribute('aria-hidden','false');
+    lb.dataset.hasMultiple = String(imgs.length>1);
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    lb.setAttribute('aria-hidden','true');
+    lbImg.src='';
+    document.body.style.overflow='';
+  }
+  function showNext(dir=1){ openAt((current+dir+imgs.length)%imgs.length); }
 
-    function openAt(index) {
-      if (index < 0 || index >= cards.length) return;
-      current = index;
-
-      const img = cards[index];
-      lbImg.src = img.getAttribute('data-full') || img.src;
-      lbImg.alt = img.alt || '';
-      lbCaption.textContent = img.alt || '';
-      lb.setAttribute('aria-hidden', 'false');
-      lb.dataset.hasMultiple = String(cards.length > 1);
-      document.body.style.overflow = 'hidden';
-
-      // Focus close for keyboard users
-      btnClose.focus();
-    }
-
-    function close() {
-      lb.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      lbImg.src = '';
-    }
-
-    function showNext(dir = 1) {
-      const next = (current + dir + cards.length) % cards.length;
-      openAt(next);
-    }
-
-    // Open on click (event delegation)
-    grid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.photo-card');
-      if (!btn) return;
-      const index = Number(btn.dataset.index ?? cards.indexOf(btn.querySelector('img')));
-      openAt(index);
-    });
-
-    // Controls
-    btnClose.addEventListener('click', close);
-    btnPrev.addEventListener('click', () => showNext(-1));
-    btnNext.addEventListener('click', () => showNext(1));
-
-    // Close on overlay click
-    lb.addEventListener('click', (e) => {
-      if (e.target === lb) close();
-    });
-
-    // Keyboard handling
-    window.addEventListener('keydown', (e) => {
-      if (lb.getAttribute('aria-hidden') === 'true') return;
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowRight') showNext(1);
-      if (e.key === 'ArrowLeft') showNext(-1);
-    });
-
-    // Optional: preload the "full" images on hover for snappier lightbox
-    grid.addEventListener('mouseover', (e) => {
-      const img = e.target.closest('img');
-      if (!img) return;
-      const full = img.getAttribute('data-full');
-      if (full) {
-        const pre = new Image();
-        pre.src = full;
-      }
-    });
-  })();
+  grid.addEventListener('click',e=>{
+    const fig = e.target.closest('.photo-card');
+    if(!fig) return;
+    openAt(figures.indexOf(fig));
+  });
+  btnClose.addEventListener('click',close);
+  btnPrev.addEventListener('click',()=>showNext(-1));
+  btnNext.addEventListener('click',()=>showNext(1));
+  lb.addEventListener('click',e=>{ if(e.target===lb) close(); });
+  window.addEventListener('keydown',e=>{
+    if(lb.getAttribute('aria-hidden')==='true') return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowRight') showNext(1);
+    if(e.key==='ArrowLeft') showNext(-1);
+  });
+})();
 </script>
-<!-- ========== /Photo Grid + Lightbox ========== -->
+<!-- ========== /Photo Grid + Lightbox with Captions ========== -->
 
-
-    <ul class="grid" role="list">
-      <!-- Card 1 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="https://adityakhandelwal1729.github.io/portfolio/images/Chonkers.jpeg"
-            alt="Gold microelectrode tip glinting under microscope light."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Au Microelectrode Tip</span>
-            <span class="cap-meta">CMU Panat Lab • Pittsburgh</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 2 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/ajp-printing_800.jpg"
-            alt="Aerosol Jet Printing head depositing tracks on a polymer substrate."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Aerosol Jet Printing</span>
-            <span class="cap-meta">Process snapshot</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 3 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/city-night_800.jpg"
-            alt="Downtown skyline at night reflecting on the river."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">City Reflections</span>
-            <span class="cap-meta">Night walk</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 4 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/ridge-hike_800.jpg"
-            alt="Ridge trail bathed in golden light at sunset."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Last Light on the Ridge</span>
-            <span class="cap-meta">Blue hour</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 5 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/lab-team_800.jpg"
-            alt="Candid of lab teammates reviewing data around a bench."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Debugging a Setup</span>
-            <span class="cap-meta">Teammates & tea</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 6 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/steel-bridge_800.jpg"
-            alt="Abstract angle of a steel bridge with repeating trusses."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Truss Rhythms</span>
-            <span class="cap-meta">Geometry study</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 7 -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/waterfall_800.jpg"
-            alt="Silky waterfall framed by mossy rocks."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Soft Water, Hard Stone</span>
-            <span class="cap-meta">Long exposure</span>
-          </figcaption>
-        </figure>
-      </li>
-
-      <!-- Card 8 (example placeholder) -->
-      <li class="card">
-        <figure>
-          <img
-            class="thumb"
-            src="images/placeholder_800.jpg"
-            alt="Describe the scene here."
-            loading="lazy"
-            width="800" height="600"
-          />
-          <figcaption>
-            <span class="cap-title">Caption Title</span>
-            <span class="cap-meta">Location • Context</span>
-          </figcaption>
-        </figure>
-      </li>
-    </ul>
-  </main>
 </body>
 </html>
