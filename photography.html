@@ -81,6 +81,27 @@
             background: rgba(15,23,42,0.8);
             text-align: center;
           }
+
+            .photo-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 12px; /* spacing between items */
+              position: relative;
+            }
+            
+            .photo-grid::before,
+            .photo-grid::after {
+              content: '';
+              display: block;
+            }
+            
+            .photo-grid hr {
+              grid-column: 1 / -1;  /* make divider span all columns */
+              border: none;
+              border-top: 1px solid rgba(255,255,255,0.1); /* light subtle line */
+              margin: 8px 0;
+            }
+
         
           /* Lightbox */
           .lightbox {
@@ -176,6 +197,8 @@
           </figure>
         </div>
 
+        <hr> <!-- divider between rows -->
+        
         <div class="photo-grid" id="photoGrid">
           <figure class="photo-card" data-index="3">
             <img
