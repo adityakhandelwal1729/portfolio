@@ -34,7 +34,234 @@
 <body>
   <main class="container" aria-label="Photography grid">
     <h1>Photography</h1>
-    <p class="sub">A simple grid of images with captions. Replace the image paths and text below.</p>
+        <!-- ========== Photo Grid + Lightbox (Drop-in) ========== -->
+<style>
+  /* Grid */
+  .photo-grid {
+    --gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+  @media (max-width: 900px) {
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .photo-grid { grid-template-columns: 1fr; }
+  }
+
+  .photo-card {
+    position: relative;
+    cursor: zoom-in;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111827; /* fallback bg while loading */
+    box-shadow: 0 6px 16px rgba(0,0,0,.25);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .photo-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.3); }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    aspect-ratio: 4/3;         /* keep tidy cards */
+    object-fit: cover;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  .lightbox[aria-hidden="false"] { display: flex; }
+
+  .lightbox__dialog {
+    position: relative;
+    max-width: min(92vw, 1200px);
+    max-height: 90vh;
+  }
+  .lightbox__img {
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.5);
+  }
+
+  .lightbox__close,
+  .lightbox__prev,
+  .lightbox__next {
+    position: absolute;
+    border: none;
+    background: rgba(255,255,255,.12);
+    color: #fff;
+    padding: .6rem .8rem;
+    border-radius: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background .15s ease, transform .1s ease;
+  }
+  .lightbox__close:hover,
+  .lightbox__prev:hover,
+  .lightbox__next:hover { background: rgba(255,255,255,.2); }
+  .lightbox__close:active,
+  .lightbox__prev:active,
+  .lightbox__next:active { transform: scale(.98); }
+
+  .lightbox__close { top: -48px; right: 0; }
+  .lightbox__prev  { top: 50%; left: -56px; transform: translateY(-50%); }
+  .lightbox__next  { top: 50%; right: -56px; transform: translateY(-50%); }
+
+  @media (max-width: 720px) {
+    .lightbox__prev { left: 8px; }
+    .lightbox__next { right: 8px; }
+    .lightbox__close { top: 8px; right: 8px; }
+  }
+
+  /* Optional caption */
+  .lightbox__caption {
+    margin-top: .6rem;
+    text-align: center;
+    color: #e5e7eb;
+    font-size: .95rem;
+  }
+
+  /* Hide buttons if only one image */
+  .lightbox[data-has-multiple="false"] .lightbox__prev,
+  .lightbox[data-has-multiple="false"] .lightbox__next { display: none; }
+</style>
+
+<div class="photo-grid" id="photoGrid">
+  <!-- Card 1 -->
+  <button class="photo-card" data-index="0" aria-label="Open image 1">
+    <img
+      src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=60"
+      data-full="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&auto=format&fit=crop&q=80"
+      alt="Mountain range at golden hour"
+      loading="lazy">
+  </button>
+
+  <!-- Card 2 -->
+  <button class="photo-card" data-index="1" aria-label="Open image 2">
+    <img
+      src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&auto=format&fit=crop&q=60"
+      data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2000&auto=format&fit=crop&q=80"
+      alt="Forest with sunbeams"
+      loading="lazy">
+  </button>
+
+  <!-- Card 3 -->
+  <button class="photo-card" data-index="2" aria-label="Open image 3">
+    <img
+      src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=60"
+      data-full="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&auto=format&fit=crop&q=80"
+      alt="Ocean waves at sunset"
+      loading="lazy">
+  </button>
+
+  <!-- Add more cards as needed... -->
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="lightbox__dialog">
+    <img class="lightbox__img" id="lightboxImg" alt="">
+    <div class="lightbox__caption" id="lightboxCaption"></div>
+
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
+    <button class="lightbox__prev"  id="lightboxPrev"  aria-label="Previous image">←</button>
+    <button class="lightbox__next"  id="lightboxNext"  aria-label="Next image">→</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const grid = document.getElementById('photoGrid');
+    const cards = Array.from(grid.querySelectorAll('.photo-card img'));
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbCaption = document.getElementById('lightboxCaption');
+    const btnClose = document.getElementById('lightboxClose');
+    const btnPrev = document.getElementById('lightboxPrev');
+    const btnNext = document.getElementById('lightboxNext');
+
+    let current = 0;
+
+    function openAt(index) {
+      if (index < 0 || index >= cards.length) return;
+      current = index;
+
+      const img = cards[index];
+      lbImg.src = img.getAttribute('data-full') || img.src;
+      lbImg.alt = img.alt || '';
+      lbCaption.textContent = img.alt || '';
+      lb.setAttribute('aria-hidden', 'false');
+      lb.dataset.hasMultiple = String(cards.length > 1);
+      document.body.style.overflow = 'hidden';
+
+      // Focus close for keyboard users
+      btnClose.focus();
+    }
+
+    function close() {
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    function showNext(dir = 1) {
+      const next = (current + dir + cards.length) % cards.length;
+      openAt(next);
+    }
+
+    // Open on click (event delegation)
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.photo-card');
+      if (!btn) return;
+      const index = Number(btn.dataset.index ?? cards.indexOf(btn.querySelector('img')));
+      openAt(index);
+    });
+
+    // Controls
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', () => showNext(-1));
+    btnNext.addEventListener('click', () => showNext(1));
+
+    // Close on overlay click
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) close();
+    });
+
+    // Keyboard handling
+    window.addEventListener('keydown', (e) => {
+      if (lb.getAttribute('aria-hidden') === 'true') return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') showNext(1);
+      if (e.key === 'ArrowLeft') showNext(-1);
+    });
+
+    // Optional: preload the "full" images on hover for snappier lightbox
+    grid.addEventListener('mouseover', (e) => {
+      const img = e.target.closest('img');
+      if (!img) return;
+      const full = img.getAttribute('data-full');
+      if (full) {
+        const pre = new Image();
+        pre.src = full;
+      }
+    });
+  })();
+</script>
+<!-- ========== /Photo Grid + Lightbox ========== -->
+
 
     <ul class="grid" role="list">
       <!-- Card 1 -->
