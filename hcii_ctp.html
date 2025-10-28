@@ -51,22 +51,254 @@
                           Judith Uchidiuno (Co-Primary Investigator), <br>
                 </p>
                 
-                <div class="research-grid">
-                    <div class="research-card">
-                        <h3>IMAGE 1</h3>
-                        <p>Creating Customizable Multielectrode Array neural implants for electrophysiological recording.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h3>IMAGE 2</h3>
-                        <p>Explored how social-emotional learning (SEL) unfolds for youth in the playful world of Lego Brick Club.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h3>IMAGE 3</h3>
-                        <p>Fabrication and characterization of thin-film quartz resonators for high gain and Q. </p>
-                    </div>
-                </div>
+                            <style>
+              /* Grid */
+              .photo-grid {
+                --gap: 12px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--gap);
+              }
+              @media (max-width: 900px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+              @media (max-width: 560px) { .photo-grid { grid-template-columns: 1fr; } }
+            
+              figure.photo-card {
+                position: relative;
+                cursor: zoom-in;
+                border-radius: 12px;
+                overflow: hidden;
+                background: #111827;
+                box-shadow: 0 6px 16px rgba(0,0,0,.25);
+                transition: transform .15s ease, box-shadow .15s ease;
+              }
+              figure.photo-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 24px rgba(0,0,0,.3);
+              }
+            
+              .photo-card img {
+                width: 100%;
+                height: 100%;
+                aspect-ratio: 4/3;
+                object-fit: cover;
+                display: block;
+              }
+            
+              .photo-card figcaption {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+                color: #e2e8f0;
+                background: rgba(15,23,42,0.8);
+                text-align: center;
+              }
+    
+              /* NEW: styles for provided caption structure */
+              .photo-card .cap-title {
+                display: block;
+                font-weight: 600;
+                line-height: 1.3;
+              }
+              .photo-card .cap-meta {
+                display: block;
+                opacity: 0.8;
+                font-size: 0.85rem;
+                line-height: 1.2;
+              }
+    
+              .photo-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px; /* spacing between items */
+                position: relative;
+              }
+                
+              .photo-grid::before,
+              .photo-grid::after {
+                content: '';
+                display: block;
+              }
+                
+              .photo-grid hr {
+                grid-column: 1 / -1;  /* make divider span all columns */
+                border: none;
+                border-top: 1px solid rgba(255,255,255,0.1); /* light subtle line */
+                margin: 8px 0;
+              }
+            
+              /* Lightbox */
+              .lightbox {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,.85);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+              }
+              .lightbox[aria-hidden="false"] { display: flex; }
+            
+              .lightbox__dialog {
+                position: relative;
+                max-width: min(92vw, 1200px);
+                max-height: 90vh;
+              }
+              .lightbox__img {
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: 10px;
+                box-shadow: 0 12px 36px rgba(0,0,0,.5);
+              }
+            
+              .lightbox__caption {
+                margin-top: .6rem;
+                text-align: center;
+                color: #e5e7eb;
+                font-size: .95rem;
+              }
+            
+              .lightbox__close,
+              .lightbox__prev,
+              .lightbox__next {
+                position: absolute;
+                border: none;
+                background: rgba(255,255,255,.12);
+                color: #fff;
+                padding: .6rem .8rem;
+                border-radius: 10px;
+                cursor: pointer;
+                backdrop-filter: blur(4px);
+                transition: background .15s ease, transform .1s ease;
+              }
+              .lightbox__close:hover,
+              .lightbox__prev:hover,
+              .lightbox__next:hover { background: rgba(255,255,255,.2); }
+              .lightbox__close:active,
+              .lightbox__prev:active,
+              .lightbox__next:active { transform: scale(.98); }
+            
+              .lightbox__close { top: -48px; right: 0; }
+              .lightbox__prev  { top: 50%; left: -56px; transform: translateY(-50%); }
+              .lightbox__next  { top: 50%; right: -56px; transform: translateY(-50%); }
+            
+              @media (max-width: 720px) {
+                .lightbox__prev { left: 8px; }
+                .lightbox__next { right: 8px; }
+                .lightbox__close { top: 8px; right: 8px; }
+              }
+            
+              .lightbox[data-has-multiple="false"] .lightbox__prev,
+              .lightbox[data-has-multiple="false"] .lightbox__next { display: none; }
+            </style>
+            
+            <div class="photo-grid" id="photoGrid">
+              <hr>
+              <figure class="photo-card" data-index="0">
+                <img
+                  src="https://adityakhandelwal1729.github.io/portfolio/images/Lego_1.jpg"
+                  data-full="https://adityakhandelwal1729.github.io/portfolio/images/Lego_1.jpg"
+                  alt="Lego Club"
+                  loading="lazy">
+                <figcaption>
+                  <span class="cap-title">Lego Club</span>
+                  <span class="cap-meta">Center for Transformational Play, HCII</span>
+                </figcaption>
+              </figure>
+            
+              <figure class="photo-card" data-index="1">
+                <img
+                  src="https://adityakhandelwal1729.github.io/portfolio/images/Lego_3.jpg"
+                  data-full="https://adityakhandelwal1729.github.io/portfolio/images/Lego_3.jpg"
+                  alt="Lego Club"
+                  loading="lazy">
+                <figcaption>
+                  <span class="cap-title">Lego Club</span>
+                  <span class="cap-meta">Center for Transformational Play, HCII</span>
+                </figcaption>
+              </figure>
+            
+              <figure class="photo-card" data-index="2">
+                <img
+                  src="https://adityakhandelwal1729.github.io/portfolio/images/brick_club_2.jpg"
+                  data-full="https://adityakhandelwal1729.github.io/portfolio/images/brick_club_2.jpg"
+                  alt="Lego Club"
+                  loading="lazy">
+                <figcaption>
+                  <span class="cap-title">Lego Club</span>
+                  <span class="cap-meta">Center for Transformational Play, HCII</span>
+                </figcaption>
+              </figure>
+              <hr>
+            </div>
+            
+            <!-- Lightbox -->
+            <div class="lightbox" id="lightbox" aria-hidden="true">
+              <div class="lightbox__dialog">
+                <img class="lightbox__img" id="lightboxImg" alt="">
+                <div class="lightbox__caption" id="lightboxCaption"></div>
+            
+                <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
+                <button class="lightbox__prev"  id="lightboxPrev"  aria-label="Previous image">←</button>
+                <button class="lightbox__next"  id="lightboxNext"  aria-label="Next image">→</button>
+              </div>
+            </div>
+    
+            <script>
+            (function(){
+              const grid = document.getElementById('photoGrid');
+              const figures = Array.from(grid.querySelectorAll('.photo-card'));
+              const imgs = figures.map(f => f.querySelector('img'));
+              // NEW: derive captions from figcaptions (cap-title + cap-meta)
+              const caps = figures.map(f => {
+                const t = f.querySelector('.cap-title')?.textContent?.trim() || '';
+                const m = f.querySelector('.cap-meta')?.textContent?.trim() || '';
+                if (t && m) return `${t} — ${m}`;
+                return t || m || (f.querySelector('img')?.alt || '');
+              });
+    
+              const lb = document.getElementById('lightbox');
+              const lbImg = document.getElementById('lightboxImg');
+              const lbCaption = document.getElementById('lightboxCaption');
+              const btnClose = document.getElementById('lightboxClose');
+              const btnPrev = document.getElementById('lightboxPrev');
+              const btnNext = document.getElementById('lightboxNext');
+              let current = 0;
+            
+              function openAt(index){
+                if(index<0 || index>=imgs.length) return;
+                current = index;
+                const img = imgs[index];
+                lbImg.src = img.dataset.full || img.src;
+                lbImg.alt = img.alt || '';
+                // UPDATED: use figcaption-derived captions
+                lbCaption.textContent = caps[index];
+                lb.setAttribute('aria-hidden','false');
+                lb.dataset.hasMultiple = String(imgs.length>1);
+                document.body.style.overflow='hidden';
+              }
+              function close(){
+                lb.setAttribute('aria-hidden','true');
+                lbImg.src='';
+                document.body.style.overflow='';
+              }
+              function showNext(dir=1){ openAt((current+dir+imgs.length)%imgs.length); }
+            
+              grid.addEventListener('click',e=>{
+                const fig = e.target.closest('.photo-card');
+                if(!fig) return;
+                openAt(figures.indexOf(fig));
+              });
+              btnClose.addEventListener('click',close);
+              btnPrev.addEventListener('click',()=>showNext(-1));
+              btnNext.addEventListener('click',()=>showNext(1));
+              lb.addEventListener('click',e=>{ if(e.target===lb) close(); });
+              window.addEventListener('keydown',e=>{
+                if(lb.getAttribute('aria-hidden')==='true') return;
+                if(e.key==='Escape') close();
+                if(e.key==='ArrowRight') showNext(1);
+                if(e.key==='ArrowLeft') showNext(-1);
+              });
+            })();
+            </script>
             </div>
         </section>
 
