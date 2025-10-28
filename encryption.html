@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEMs</title>
+    <title>Encryption</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -34,25 +34,24 @@
     <main>
         <section id="research" class="research-section">
             <div class="container">
-                <h2>AES-CTR Encryption Core</h2>
-                <p>This project involved the fabrication and characterization of thin-film quartz resonators for high gain and Q. Thin-film quartz provides a reduction in form factor as well as low-power consumption as compared to bulk quartz resonators, wherein I contributed through rapid characterization of the fabricated devices using a 2-port VNA for various operating conditions like low pressure and elevated temperature, along with participating in RCA for fabrication bottlenecks. These resonators can be employed in Oven-Controlled Crystal Oscillators, which offer high turn-over-temperature stability, ideal for applications requiring high reliability, and in low-power oscillators with small real estate.
+                <h2>AES-CTR Encryption Core: Secure Root of Trust RTL-to-Signoff Flow</h2>
+                <p>
+                I implemented a Register Transfer Level-to-Graphic Data System II (<strong>RTL-to-GDSII</strong>) flow for a secure <strong>Root of Trust (RoT)</strong) 
+                designed around a 32-bit Central Processing Unit (<strong>CPU</strong>) using Verilog. 
+                The design integrates a pipelined 128-bit <strong>Advanced Encryption Standard in Counter Mode (AES-CTR)</strong> engine, 
+                a <strong>Physically Unclonable Function (PUF)</strong>, and a Ring Oscillator–based <strong>True Random Number Generator (TRNG)</strong> 
+                as part of the secure core. Automatic Place and Route (<strong>APR</strong>) was executed using the FLAT flow in Cadence Innovus, 
+                with verification of both timing and power intent.
                 </p>
-                <div class="research-grid">
-                    <div class="research-card">
-                        <h3>IMAGE 1</h3>
-                        <p>Creating Customizable Multielectrode Array neural implants for electrophysiological recording.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h3>IMAGE 2</h3>
-                        <p>Explored how social-emotional learning (SEL) unfolds for youth in the playful world of Lego Brick Club.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h3>IMAGE 3</h3>
-                        <p>Fabrication and characterization of thin-film quartz resonators for high gain and Q. </p>
-                    </div>
-                </div>
+                
+                <p>
+                I drove the design flow using Cadence Genus for logic synthesis and Innovus for Place and Route (<strong>PNR</strong>) 
+                with the 7-nanometer <strong>ASAP7 Process Design Kit (PDK)</strong>. 
+                Comprehensive timing and power signoff were performed through Synopsys Design Constraints (<strong>SDC</strong>) 
+                and Common Power Format (<strong>CPF</strong>), optimizing the design for approximately 1 gigahertz (~1 GHz) operation 
+                and low power consumption.
+                </p>
+
             </div>
         </section>
 
