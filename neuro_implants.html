@@ -191,6 +191,20 @@
             
               .lightbox[data-has-multiple="false"] .lightbox__prev,
               .lightbox[data-has-multiple="false"] .lightbox__next { display: none; }
+            .blur-wrapper {
+              display: inline-block;
+              cursor: pointer;
+              overflow: hidden;
+            }
+            
+            .blurred {
+              filter: blur(12px);
+              transition: filter 0.5s ease;
+            }
+            
+            .blur-wrapper:hover img {
+              filter: blur(8px); /* optional gentle preview on hover */
+            }
             </style>
             
             <div class="photo-grid" id="photoGrid">
@@ -199,6 +213,7 @@
                 <img
                   src="https://adityakhandelwal1729.github.io/portfolio/images/implant_testing_1.jpg"
                   data-full="https://adityakhandelwal1729.github.io/portfolio/images/implant_testing_1.jpg"
+                  class="blurred"
                   alt="Implant Testing"
                   loading="lazy">
                 <figcaption>
